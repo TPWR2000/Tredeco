@@ -20,7 +20,6 @@ function App() {
       <AppShell>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/tredeco" element={<Home />} />
           <Route path="/kalkulator" element={<KalkulatorPage />} />
           <Route path="/kalendarz" element={<FullCalendar />} />
           <Route path="/o-systemie" element={<About />} />
