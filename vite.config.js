@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 export default defineConfig({
-    base: '/tredeco/',
+    base: '/',
     plugins: [
         react(),
         VitePWA({
@@ -19,7 +19,7 @@ export default defineConfig({
                 display: 'standalone',
                 display_override: ['standalone', 'window-controls-overlay'],
                 orientation: 'portrait',
-                start_url: '.',
+                start_url: '/',
                 scope: '/',
                 icons: [
                     {
