@@ -9,6 +9,13 @@ import {
   isTredecoLeapYear,
 } from '../logic/tredecoEngine';
 
+const MIN_YEAR = 1;
+const MAX_YEAR = 100000;
+
+function clampYear(value: number): number {
+  return Math.max(MIN_YEAR, Math.min(MAX_YEAR, value));
+}
+
 function rotateWeekdays(startIndex: number): string[] {
   return [
     ...TREDECO_WEEKDAYS_SHORT.slice(startIndex),
@@ -167,7 +174,38 @@ export function FullCalendar() {
       return;
     }
 
-    setSelectedYear(Number(yearInput));
+    const parsedYear = Number(yearInput);
+    if (!Number.isInteger(parsedYear) || parsedYear < MIN_YEAR || parsedYear > MAX_YEAR) {
+      return;
+    }
+
+    setSelectedYear(parsedYear);
+  };
+
+  const handleYearChange = (value: string) => {
+    setYearInput(value);
+    
+    const parsed = Number(value);
+    if (value === '' || Number.isNaN(parsed)) {
+      return;
+    }
+    
+    const clamped = clampYear(parsed);
+    if (clamped !== parsed) {
+      setSelectedYear(clamped);
+    }
+  };
+
+  const handlePrevYear = () => {
+    const newYear = Math.max(MIN_YEAR, selectedYear - 1);
+    setSelectedYear(newYear);
+    setYearInput(String(newYear));
+  };
+
+  const handleNextYear = () => {
+    const newYear = Math.min(MAX_YEAR, selectedYear + 1);
+    setSelectedYear(newYear);
+    setYearInput(String(newYear));
   };
 
   const startWeekdayOfMarch1st = getStartWeekdayOfMarch1st(selectedYear);
@@ -194,31 +232,27 @@ export function FullCalendar() {
       >
         <button
           type="button"
-          onClick={() => {
-            const newYear = selectedYear - 1;
-            setSelectedYear(newYear);
-            setYearInput(String(newYear));
-          }}
-          className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-300 bg-white text-lg font-medium transition hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-950 dark:hover:bg-slate-800"
+          onClick={handlePrevYear}
+          disabled={selectedYear <= MIN_YEAR}
+          className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-300 bg-white text-lg font-medium transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40 dark:border-slate-700 dark:bg-slate-950 dark:hover:bg-slate-800"
           aria-label="Poprzedni rok"
         >
           ‹
         </button>
         <input
           type="number"
+          min={MIN_YEAR}
+          max={MAX_YEAR}
           value={yearInput}
-          onChange={(event) => setYearInput(event.target.value)}
-          placeholder="Wpisz rok..."
+          onChange={(event) => handleYearChange(event.target.value)}
+          placeholder={`${MIN_YEAR} - ${MAX_YEAR}`}
           className="w-40 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-950"
         />
         <button
           type="button"
-          onClick={() => {
-            const newYear = selectedYear + 1;
-            setSelectedYear(newYear);
-            setYearInput(String(newYear));
-          }}
-          className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-300 bg-white text-lg font-medium transition hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-950 dark:hover:bg-slate-800"
+          onClick={handleNextYear}
+          disabled={selectedYear >= MAX_YEAR}
+          className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-300 bg-white text-lg font-medium transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40 dark:border-slate-700 dark:bg-slate-950 dark:hover:bg-slate-800"
           aria-label="Następny rok"
         >
           ›
