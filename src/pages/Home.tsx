@@ -120,7 +120,28 @@ function resolveTredecoDisplay(date: Date): string {
 }
 
 export function Home() {
-  const now = useMemo(() => new Date(), []);
+  const [currentDate, setCurrentDate] = useState(() => new Date());
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentDate(new Date());
+    }, 60000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        setCurrentDate(new Date());
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, []);
+
+  const now = currentDate;
   const tredecoData = useMemo(() => gregorianToTredeco(now), [now]);
   const tredecoDate = useMemo(() => resolveTredecoDisplay(now), [now]);
   const tredecoWeekday = useMemo(() => {
