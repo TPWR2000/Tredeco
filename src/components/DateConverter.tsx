@@ -44,7 +44,28 @@ function getGregorianMonthLength(year: number, monthIndex: number): number {
 }
 
 export function DateConverter() {
-  const today = useMemo(() => new Date(), []);
+  const [currentDate, setCurrentDate] = useState(() => new Date());
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentDate(new Date());
+    }, 60000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        setCurrentDate(new Date());
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, []);
+
+  const today = currentDate;
   const todayTredeco = useMemo(() => gregorianToTredeco(today), [today]);
   const initialTredecoYear = todayTredeco.year;
   const initialTredecoMonthIndex = todayTredeco.month === 'Limes'

@@ -1,5 +1,5 @@
 import { CalendarDays } from 'lucide-react';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   TREDECO_MONTHS,
   TREDECO_WEEKDAYS_SHORT,
@@ -154,7 +154,28 @@ function LimesCard({ weekdayHeaders, hasBix, isToday, todayDay }: LimesCardProps
 }
 
 export function FullCalendar() {
-  const now = useMemo(() => new Date(), []);
+  const [currentDate, setCurrentDate] = useState(() => new Date());
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentDate(new Date());
+    }, 60000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        setCurrentDate(new Date());
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, []);
+
+  const now = currentDate;
   const nowTredeco = useMemo(() => gregorianToTredeco(now), [now]);
   const [selectedYear, setSelectedYear] = useState<number>(nowTredeco.year);
   const [yearInput, setYearInput] = useState<string>(String(nowTredeco.year));
