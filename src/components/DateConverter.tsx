@@ -128,7 +128,7 @@ export function DateConverter() {
         tredecoDisplay = `${dayName}, Limes ${tredeco.year}`;
       } else {
         tredecoWeekday = getTredecoWeekday(tredeco.day, startWeekday).toLocaleLowerCase('pl-PL');
-        tredecoDisplay = `${tredeco.day} ${tredeco.month}`;
+        tredecoDisplay = `${tredeco.day} ${tredeco.month} ${tredeco.year}`;
       }
       
       const label = `${tredecoWeekday}, ${tredecoDisplay}`;
