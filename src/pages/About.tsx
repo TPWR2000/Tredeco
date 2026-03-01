@@ -1,6 +1,6 @@
 import { ArrowLeft, Calendar, Compass, LayoutGrid, Rocket, ShieldCheck, Mail } from 'lucide-react';
-import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import { PWASyncIndicator } from '../components/PWASyncIndicator';
 
 export function About() {
   return (
@@ -130,7 +130,7 @@ export function About() {
         </section>
 
         {/* Powrót */}
-        <footer className="pt-8">
+        <footer className="pt-8 flex items-center justify-between border-t border-slate-200 dark:border-slate-800">
           <Link
               to="/kalendarz"
               className="inline-flex items-center gap-2 rounded-2xl bg-slate-900 px-6 py-3 font-bold text-white transition hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200"
@@ -138,6 +138,7 @@ export function About() {
             <ArrowLeft size={18} />
             Wróć do kalendarza
           </Link>
+          <PWASyncIndicator />
         </footer>
       </article>
   );
