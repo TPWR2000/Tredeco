@@ -256,7 +256,7 @@ export function DateConverter() {
             </label>
           </div>
 
-          <p className="rounded-2xl border-2 border-emerald-300 bg-emerald-50 px-5 py-4 text-xl font-semibold tracking-tight text-emerald-900 shadow-sm dark:border-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-200">
+          <p className="rounded-2xl border-2 border-emerald-300 bg-emerald-50 px-5 py-4 text-xl font-semibold tracking-tight text-emerald-900 shadow-sm dark:border-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-200 text-center">
             {gregorianResult}
           </p>
         </div>
@@ -318,7 +318,7 @@ export function DateConverter() {
             </label>
           </div>
 
-          <p className="rounded-2xl border-2 border-emerald-300 bg-emerald-50 px-5 py-4 text-xl font-semibold tracking-tight text-emerald-900 shadow-sm dark:border-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-200">
+          <p className="rounded-2xl border-2 border-emerald-300 bg-emerald-50 px-5 py-4 text-xl font-semibold tracking-tight text-emerald-900 shadow-sm dark:border-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-200 text-center">
             {tredecoResult}
           </p>
         </div>
