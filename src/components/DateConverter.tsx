@@ -87,7 +87,7 @@ export function DateConverter() {
 
   useEffect(() => {
     if (gregorianYear === 0 || gregorianDay === 0) {
-      setGregorianResult('Rok, miesiąc i dzień muszą być uzupełnione.');
+      setGregorianResult('Rok i dzień muszą być uzupełnione.');
       return;
     }
 
